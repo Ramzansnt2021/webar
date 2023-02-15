@@ -415,3 +415,21 @@ function mobileCheck() {
   return check;
 }
 // Gyroscope
+var gyroscope = null;
+try {
+  gyroscope = new Gyroscope();
+  gyroscope.addEventListener("error", (event) => {
+    document
+      .getElementById("camera")
+      .setAttribute("look-controls", "magicWindowTrackingEnabled: false");
+  });
+  gyroscope.start();
+  // Stop the gyroscope after trying so it does not run in background.
+  setTimeout(function () {
+    gyroscope.stop();
+  }, 500);
+} catch (error) {
+  document
+    .getElementById("camera")
+    .setAttribute("look-controls", "magicWindowTrackingEnabled: false");
+}
